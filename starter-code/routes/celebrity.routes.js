@@ -4,6 +4,7 @@ const Celebrity = require("../models/celebrity");
 
 router.get("/celebrities", (req, res, next) => {
   // get all the entries from DB
+  console.log("query", req.query);
   Celebrity.find({})
     .then((celebritiesFromDB) => {
       // pass the object which have the property name celebritiesFromDB
