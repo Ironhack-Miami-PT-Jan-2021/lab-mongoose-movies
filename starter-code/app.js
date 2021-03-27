@@ -5,6 +5,7 @@ const favicon = require("serve-favicon");
 const hbs = require("hbs");
 const logger = require("morgan");
 const path = require("path");
+var cors = require("cors");
 
 require("./configs/mongoose.config");
 
@@ -14,6 +15,8 @@ const debug = require("debug")(
 );
 
 const app = express();
+app.use(cors());
+// require session
 require("./configs/session.config")(app);
 
 // Middleware Setup

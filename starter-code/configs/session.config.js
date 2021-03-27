@@ -1,25 +1,18 @@
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
-const mongoose = require("mongoose");
 
-const sessionFn = (app) => {
+module.exports = (app) => {
   app.use(
     session({
-      secret: "keyboard cat",
-      resave: true,
-      saveUninitialized: false,
+      secret: "keyboard",
       cookie: {
-        sameSite: "none",
         httpOnly: true,
         maxAge: 60000,
       },
-      store: MongoStore.create({
+      store: new MongoStore({
         mongoUrl: process.env.MONGODB_URI,
-        ttl: 60 * 60 * 24,
+        ttl: 60 * 60 * 24, // 60sec * 60min * 24h => 1 day
       }),
     })
   );
 };
-
-module.exports = sessionFn;
-``;
