@@ -1,6 +1,9 @@
-const Celebrity = require("../models/celebrity");
+require("dotenv").config();
+const Celebrity = require("../models/celebrity.model");
+const Movie = require("../models/movie.model");
+const mongoose = require("mongoose");
 
-const array = [
+const celebrites = [
   {
     name: "Robert Downey Jr",
     occupation: "actor",
@@ -18,13 +21,29 @@ const array = [
   },
 ];
 
+const movies = [
+  {
+    title: "Titanic",
+    genre: "action",
+  },
+  {
+    title: "Inception",
+    genre: "action",
+  },
+  {
+    title: "Terminator",
+    genre: "action",
+  },
+];
+
 // establish a connection to the db
 async function seedTheDb() {
   await require("../configs/mongoose.config");
-  Celebrity.create(array)
-    .then((celebritiesFromDB) => {
-      console.log(`${celebritiesFromDB.length} celebrites have been added`);
+  Movie.create(movies)
+    .then((responseFromDB) => {
+      console.log(`${responseFromDB.length} entries have been added`);
       mongoose.connection.close();
     })
     .catch((err) => console.log("err", err));
 }
+seedTheDb();

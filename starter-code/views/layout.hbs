@@ -11,15 +11,19 @@
 
 <body>
   <ul id='navbar'>
+    {{#unless user}}
     <a href="/signup">
       <li>signup</li>
     </a>
     <a href="/login">
       <li>login</li>
     </a>
+    {{/unless}}
+    {{#if user}}
     <a href="/logout">
       <li>logout</li>
     </a>
+    {{/if}}
   </ul>
   {{{body}}}
 

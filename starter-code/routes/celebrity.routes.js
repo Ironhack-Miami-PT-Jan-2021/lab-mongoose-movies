@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Celebrity = require("../models/celebrity.model");
+const Movie = require("../models/movie.model");
 
 router.get("/celebrities", (req, res, next) => {
   // get all the entries from DB
@@ -16,7 +17,9 @@ router.get("/celebrities", (req, res, next) => {
 
 // specific routes are matched first
 router.get("/celebrities/new", (req, res, next) => {
-  res.render("celebrities/new.hbs");
+  Movie.find({}).then((moviesFromDB) => {
+    res.render("celebrities/new.hbs", { movies: moviesFromDB });
+  });
 });
 
 // param route has to come as the last route we are matching, otherwise we might match one of the specific routes
@@ -25,6 +28,7 @@ router.get("/celebrities/:celebId", (req, res, next) => {
   console.log(req.params);
   //   findById is prefered when looking for an object based on id
   Celebrity.findById(req.params.celebId)
+    .populate("movies")
     //   Celebrity.find({ _id: id }) same as above line
     .then((celebrityFromDB) => {
       // by passing the object not wrapped in another object we can refer to the properties of that object in the hbs

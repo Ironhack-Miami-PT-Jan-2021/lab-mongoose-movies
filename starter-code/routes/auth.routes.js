@@ -73,6 +73,8 @@ router.post("/login", async (req, res, next) => {
               errorMessage: "Auth does not match",
             });
           } else {
+            userArrFromDB[0].password = "";
+            req.session.user = userArrFromDB[0];
             // find user redirect to profile
             res.render("profile");
           }
@@ -80,6 +82,11 @@ router.post("/login", async (req, res, next) => {
       })
       .catch((err) => next(err));
   }
+});
+
+router.get("/logout", (req, res, next) => {
+  req.session.destroy();
+  res.redirect("/");
 });
 
 module.exports = router;
