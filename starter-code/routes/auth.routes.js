@@ -15,6 +15,13 @@ router.post("/signup", (req, res, next) => {
   if (email === "" || password === "") {
     res.render("auth/signup", { errorMessage: "All the fields are mandatory" });
   } else {
+    // check if password is 8 to 32 characters long has one lowercase and one uppercase char in it
+    if (!password.match(/^(?=.*[a-z])(?=.*[A-Z]).{8,32}$/)) {
+      res.render("auth/signup", {
+        errorMessage:
+          "Password has to be minimum 8 and maximum 32 characters long, with at least one lowecase and one uppercase letter",
+      });
+    }
     const hashedPassword = bcrypt.hashSync(password, 10);
     User.create({ email, password: hashedPassword })
       .then((userFromDB) => {
