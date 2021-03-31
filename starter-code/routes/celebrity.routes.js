@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Celebrity = require("../models/celebrity.model");
 const Movie = require("../models/movie.model");
+const userCheck = require("../configs/user-check.config");
 
 router.get("/celebrities", (req, res, next) => {
   // get all the entries from DB
@@ -38,7 +39,7 @@ router.get("/celebrities/:celebId", (req, res, next) => {
 });
 
 // post routes can have the same routes as the get routes
-router.post("/celebrities", (req, res, next) => {
+router.post("/celebrities", userCheck, (req, res, next) => {
   //   const { name, occupation, catchphrase } = req.body;`
   Celebrity.create(req.body)
     // ??
@@ -48,7 +49,7 @@ router.post("/celebrities", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.post("/celebrities/:idOfCeleb/delete", (req, res, next) => {
+router.post("/celebrities/:idOfCeleb/delete", userCheck, (req, res, next) => {
   console.log("req.params", req.params); // obj { idOfCeleb: dsadsadasdas421421 }
   Celebrity.findByIdAndRemove(req.params.idOfCeleb).then((responseFromDB) => {
     // responseFromDB is going to be the object we just deleted
@@ -56,7 +57,7 @@ router.post("/celebrities/:idOfCeleb/delete", (req, res, next) => {
   });
 });
 
-router.get("/celebrities/:id/edit", (req, res, next) => {
+router.get("/celebrities/:id/edit", userCheck, (req, res, next) => {
   Celebrity.findById(req.params.id)
     .then((celebrityFromDB) => {
       res.render("celebrities/edit.hbs", celebrityFromDB);

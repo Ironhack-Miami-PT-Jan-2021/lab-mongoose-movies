@@ -11,19 +11,22 @@
 
 <body>
   <ul id='navbar'>
-    {{#unless user}}
+    {{!-- {{#unless user}} --}}
+    <a href="/">
+      <li>home</li>
+    </a>
     <a href="/signup">
       <li>signup</li>
     </a>
     <a href="/login">
       <li>login</li>
     </a>
-    {{/unless}}
-    {{#if user}}
+    {{!-- {{/unless}} --}}
+    {{!-- {{#if user}} --}}
     <a href="/logout">
       <li>logout</li>
     </a>
-    {{/if}}
+    {{!-- {{/if}} --}}
   </ul>
   {{{body}}}
 

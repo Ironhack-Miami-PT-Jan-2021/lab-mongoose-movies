@@ -11,10 +11,10 @@ const userModel = Schema({
   password: {
     type: String,
     required: true,
-    // match: [
-    //   /(?=.*[a-zA-Z])(?=.*[\\d~!@#$%^&*()_+{}\\[\\]?<>|]).{6,50}/,
-    //   "Password has to have one Alphabetic char one number or special char",
-    // ],
+    match: [
+      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+      "Password has to have one Alphabetic char one number or special char",
+    ],
   },
 });
 
